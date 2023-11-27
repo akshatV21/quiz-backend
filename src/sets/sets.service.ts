@@ -7,6 +7,7 @@ import { QUESTIONS_LIMIT_IN_SET, SETS_LIST_LIMIT } from 'src/utils/constants'
 import { FilterQuery, UpdateQuery } from 'mongoose'
 import { SetDocument } from 'src/database/models'
 import { AddQuestionDto } from './dtos/add-question.dto'
+import { RemoveQuestionDto } from './dtos/remove-question.dto'
 
 @Injectable()
 export class SetsService {
@@ -83,6 +84,36 @@ export class SetsService {
 
       const updateSetPromise = this.SetRepository.update(setId, setUpdateQuery)
       const updateQuestionPromise = this.QuestionRepository.update(questionId, { usedInSet: true })
+
+      const [updatedSet] = await Promise.all([updateSetPromise, updateQuestionPromise])
+
+      await transaction.commitTransaction()
+      return updatedSet
+    } catch (error) {
+      await transaction.abortTransaction()
+      throw error
+    }
+  }
+
+  async removeQuestion({ setId, questionId }: RemoveQuestionDto) {
+    const getSetPromise = this.SetRepository.findById(setId, {}, { lean: true })
+    const getQuestionPromise = this.QuestionRepository.findById(questionId, {}, { lean: true })
+
+    const [set, question] = await Promise.all([getSetPromise, getQuestionPromise])
+
+    if (!set) throw new BadRequestException('Set does not exist.')
+    if (!question) throw new BadRequestException('Question does not exist.')
+    if (!question.usedInSet) throw new BadRequestException('Question is not used in a set.')
+    if (!set.questions.includes(question._id)) throw new BadRequestException('Question is not used in this set.')
+
+    const transaction = await this.SetRepository.startTransaction()
+
+    try {
+      const setUpdateQuery: UpdateQuery<SetDocument> = { $pull: { questions: questionId } }
+      if (set.questions.length - 1 < QUESTIONS_LIMIT_IN_SET) setUpdateQuery.$set = { status: 'incomplete' }
+
+      const updateSetPromise = this.SetRepository.update(setId, setUpdateQuery)
+      const updateQuestionPromise = this.QuestionRepository.update(questionId, { usedInSet: false })
 
       const [updatedSet] = await Promise.all([updateSetPromise, updateQuestionPromise])
 

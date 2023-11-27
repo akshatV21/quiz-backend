@@ -5,6 +5,7 @@ import { CreateSetDto } from './dtos/create-set.dto'
 import { HttpSuccessResponse } from 'src/utils/types'
 import { ListSetsDto } from './dtos/list-sets.dto'
 import { AddQuestionDto } from './dtos/add-question.dto'
+import { RemoveQuestionDto } from './dtos/remove-question.dto'
 
 @Controller('sets')
 export class SetsController {
@@ -36,5 +37,12 @@ export class SetsController {
   async httpAddQuestionToSet(@Body() addQuestionDto: AddQuestionDto) {
     const set = await this.setsService.addQuestion(addQuestionDto)
     return { success: true, message: 'Question added to set successfully.', data: { set } }
+  }
+
+  @Patch('remove-question')
+  @Auth({ roles: ['admin'], permission: 'set:update' })
+  async httpRemoveQuestionFromSet(@Body() removeQuestionDto: RemoveQuestionDto) {
+    const set = await this.setsService.removeQuestion(removeQuestionDto)
+    return { success: true, message: 'Question removed from set successfully.', data: { set } }
   }
 }
