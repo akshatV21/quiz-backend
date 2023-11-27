@@ -2,6 +2,10 @@ import { BadRequestException, Injectable } from '@nestjs/common'
 import { QuestionRepository, SetRepository } from 'src/database/repositories'
 import { CreateSetDto } from './dtos/create-set.dto'
 import { generateSetSerial } from 'src/utils/functions'
+import { ListSetsDto } from './dtos/list-sets.dto'
+import { SETS_LIST_LIMIT } from 'src/utils/constants'
+import { FilterQuery } from 'mongoose'
+import { SetDocument } from 'src/database/models'
 
 @Injectable()
 export class SetsService {
@@ -39,5 +43,16 @@ export class SetsService {
       await transaction.abortTransaction()
       throw error
     }
+  }
+
+  async list(query: ListSetsDto) {
+    const skip = (query.page - 1) * SETS_LIST_LIMIT
+
+    const queryObj: FilterQuery<SetDocument> = {}
+    if (query.topic) queryObj.topic = query.topic
+    if (query.status) queryObj.status = query.status
+
+    const sets = await this.SetRepository.find(queryObj, {}, { skip, limit: SETS_LIST_LIMIT })
+    return sets
   }
 }

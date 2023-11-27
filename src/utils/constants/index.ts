@@ -99,6 +99,7 @@ export const TOPICS = {
   SPACE: 'space',
 } as const
 
+export const SETS_LIST_LIMIT = 10
 export const QUESTIONS_LIST_LIMIT = 20
 
 export const SETS_STATUS = {
