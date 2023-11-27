@@ -98,3 +98,5 @@ export const TOPICS = {
   PROGRAMMING: 'programming',
   SPACE: 'space',
 } as const
+
+export const QUESTIONS_LIST_LIMIT = 20

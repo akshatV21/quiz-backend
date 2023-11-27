@@ -24,6 +24,10 @@ export class AbstractRepository<T extends Document, S extends Record<string, any
     return entity.save()
   }
 
+  async createMany(createDtos: S[]): Promise<any[]> {
+    return this.AbstractModel.insertMany(createDtos)
+  }
+
   async find<Props extends ProjectionType<T> = {}>(
     query: FilterQuery<T>,
     projection?: Props,

@@ -17,6 +17,9 @@ export class Question {
 
   @Prop({ required: true })
   topic: Topic
+
+  @Prop({ default: false })
+  usedInSet?: boolean
 }
 
 export const QuestionSchema = SchemaFactory.createForClass(Question)
