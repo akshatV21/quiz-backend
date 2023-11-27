@@ -15,7 +15,7 @@ export class Question {
   @Prop({ required: true })
   answer: string
 
-  @Prop({ required: true })
+  @Prop({ required: true, index: true })
   topic: Topic
 
   @Prop({ default: false })

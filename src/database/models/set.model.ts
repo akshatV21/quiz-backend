@@ -6,10 +6,10 @@ export type SetDocument = Set & Document
 
 @Schema({ timestamps: true })
 export class Set {
-  @Prop({ required: true })
+  @Prop({ required: true, index: true })
   serial: Serial
 
-  @Prop({ required: true })
+  @Prop({ required: true, index: true })
   topic: Topic
 
   @Prop({ required: true, ref: 'Question' })
