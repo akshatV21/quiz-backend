@@ -46,6 +46,11 @@ export class SetsService {
     }
   }
 
+  async getById(setId: string) {
+    const set = await this.SetRepository.findById(setId, {}, { populate: { path: 'questions', select: 'question options' } })
+    return set
+  }
+
   async list(query: ListSetsDto) {
     const skip = (query.page - 1) * SETS_LIST_LIMIT
 

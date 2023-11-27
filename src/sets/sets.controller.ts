@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
 import { SetsService } from './sets.service'
 import { Auth } from 'src/auth/decorators/auth.decorator'
 import { CreateSetDto } from './dtos/create-set.dto'
@@ -21,5 +21,12 @@ export class SetsController {
   async httpListSets(@Query() query: ListSetsDto): HttpSuccessResponse {
     const sets = await this.setsService.list(query)
     return { success: true, message: 'Sets fetched successfully.', data: { sets } }
+  }
+
+  @Get(':id')
+  @Auth({ roles: ['admin'], permission: 'set:read' })
+  async httpGetSetById(@Param('id') setId: string): HttpSuccessResponse {
+    const set = await this.setsService.getById(setId)
+    return { success: true, message: 'Set fetched successfully.', data: { set } }
   }
 }
