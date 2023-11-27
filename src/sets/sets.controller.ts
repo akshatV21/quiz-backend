@@ -45,4 +45,11 @@ export class SetsController {
     const set = await this.setsService.removeQuestion(removeQuestionDto)
     return { success: true, message: 'Question removed from set successfully.', data: { set } }
   }
+
+  @Patch('topic')
+  @Auth({ roles: ['admin'], permission: 'set:update' })
+  async httpUpdateSetTopic(@Body() updateSetTopicDto: { id: string; topic: string }) {
+    const set = await this.setsService.updateTopic(updateSetTopicDto)
+    return { success: true, message: 'Set topic updated successfully.', data: { set } }
+  }
 }

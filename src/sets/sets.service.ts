@@ -124,4 +124,9 @@ export class SetsService {
       throw error
     }
   }
+
+  async updateTopic({ id, topic }: { id: string; topic: string }) {
+    const set = await this.SetRepository.update(id, { topic })
+    return set
+  }
 }
