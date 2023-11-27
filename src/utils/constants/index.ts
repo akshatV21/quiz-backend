@@ -100,3 +100,8 @@ export const TOPICS = {
 } as const
 
 export const QUESTIONS_LIST_LIMIT = 20
+
+export const SETS_STATUS = {
+  INCOMPLETE: 'incomplete',
+  COMPLETED: 'completed',
+} as const

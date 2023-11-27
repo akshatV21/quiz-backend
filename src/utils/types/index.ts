@@ -1,5 +1,4 @@
-// src/utils/types/index.ts
-import { ENTITIES, ROLES, USER_ACTIONS, SUBMISSION_ACTIONS, ACTIONS, TOPICS } from '../constants'
+import { ENTITIES, ROLES, USER_ACTIONS, SUBMISSION_ACTIONS, ACTIONS, TOPICS, SETS_STATUS } from '../constants'
 
 export type Role = (typeof ROLES)[keyof typeof ROLES]
 
@@ -24,3 +23,7 @@ export type HttpSuccessResponse = Promise<{
 }>
 
 export type Topic = (typeof TOPICS)[keyof typeof TOPICS]
+
+export type Serial = `${number}${number}${number}${number}`
+
+export type SetStatus = (typeof SETS_STATUS)[keyof typeof SETS_STATUS]
