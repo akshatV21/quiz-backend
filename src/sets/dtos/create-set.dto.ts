@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common'
 import { Transform } from 'class-transformer'
 import { IsEnum, IsMongoId, IsNotEmpty } from 'class-validator'
 import { Types } from 'mongoose'
@@ -9,8 +10,14 @@ export class CreateSetDto {
   @IsNotEmpty()
   topic: Topic
 
-  @Transform(({ value }) => value.map((id: string) => new Types.ObjectId(id)))
-  @IsMongoId({ each: true })
+  @Transform(({ value }) => {
+    return value.map((questionId: string) => {
+      const isValid = Types.ObjectId.isValid(questionId)
+      if (!isValid) throw new BadRequestException(['Invalid question id.'])
+
+      return new Types.ObjectId(questionId)
+    })
+  })
   @IsNotEmpty()
   questions: Types.ObjectId[]
 }

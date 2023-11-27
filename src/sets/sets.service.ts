@@ -16,6 +16,7 @@ export class SetsService {
 
   async create(createSetDto: CreateSetDto) {
     const questions = await this.QuestionRepository.find({ _id: { $in: createSetDto.questions } })
+    if (questions.length !== createSetDto.questions.length) throw new BadRequestException('Some questions do not exist.')
 
     const usedQuestions = questions.some(question => question.usedInSet)
     if (usedQuestions) throw new BadRequestException('Some questions are already used in a set.')

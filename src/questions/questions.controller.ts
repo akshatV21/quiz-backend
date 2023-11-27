@@ -10,7 +10,7 @@ import { UpdateQuestionDto } from './dtos/update-question.dto'
 export class QuestionsController {
   constructor(private readonly questionsService: QuestionsService) {}
 
-  @Post('create')
+  @Post()
   @Auth({ roles: ['admin'], permission: 'question:create' })
   async httpCreateQuestions(@Body() createQuestionsDto: CreateQuestionsDto): HttpSuccessResponse {
     const questions = await this.questionsService.create(createQuestionsDto)

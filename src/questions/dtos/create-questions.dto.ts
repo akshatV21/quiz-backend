@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer'
 import { ArrayMaxSize, ArrayMinSize, IsArray, IsEnum, IsNotEmpty, IsString, ValidateBy, ValidateNested } from 'class-validator'
 import { TOPICS } from 'src/utils/constants'
 import { Topic } from 'src/utils/types'
@@ -35,6 +36,7 @@ export class QuestionDto {
 
 export class CreateQuestionsDto {
   @ValidateNested({ each: true })
+  @Type(() => QuestionDto)
   @IsArray()
   @IsNotEmpty()
   questions: QuestionDto[]
