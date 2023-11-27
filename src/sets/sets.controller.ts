@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
+import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common'
 import { SetsService } from './sets.service'
 import { Auth } from 'src/auth/decorators/auth.decorator'
 import { CreateSetDto } from './dtos/create-set.dto'
 import { HttpSuccessResponse } from 'src/utils/types'
 import { ListSetsDto } from './dtos/list-sets.dto'
+import { AddQuestionDto } from './dtos/add-question.dto'
 
 @Controller('sets')
 export class SetsController {
@@ -28,5 +29,12 @@ export class SetsController {
   async httpGetSetById(@Param('id') setId: string): HttpSuccessResponse {
     const set = await this.setsService.getById(setId)
     return { success: true, message: 'Set fetched successfully.', data: { set } }
+  }
+
+  @Patch('add-question')
+  @Auth({ roles: ['admin'], permission: 'set:update' })
+  async httpAddQuestionToSet(@Body() addQuestionDto: AddQuestionDto) {
+    const set = await this.setsService.addQuestion(addQuestionDto)
+    return { success: true, message: 'Question added to set successfully.', data: { set } }
   }
 }

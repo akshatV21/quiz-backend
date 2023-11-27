@@ -3,9 +3,10 @@ import { QuestionRepository, SetRepository } from 'src/database/repositories'
 import { CreateSetDto } from './dtos/create-set.dto'
 import { generateSetSerial } from 'src/utils/functions'
 import { ListSetsDto } from './dtos/list-sets.dto'
-import { SETS_LIST_LIMIT } from 'src/utils/constants'
-import { FilterQuery } from 'mongoose'
+import { QUESTIONS_LIMIT_IN_SET, SETS_LIST_LIMIT } from 'src/utils/constants'
+import { FilterQuery, UpdateQuery } from 'mongoose'
 import { SetDocument } from 'src/database/models'
+import { AddQuestionDto } from './dtos/add-question.dto'
 
 @Injectable()
 export class SetsService {
@@ -31,7 +32,7 @@ export class SetsService {
         topic: createSetDto.topic,
         questions: createSetDto.questions,
         serial: generateSetSerial(),
-        status: createSetDto.questions.length === 10 ? 'completed' : 'incomplete',
+        status: createSetDto.questions.length === QUESTIONS_LIMIT_IN_SET ? 'completed' : 'incomplete',
       })
 
       const updateQuestionsPromise = await this.QuestionRepository.updateMany({ _id: { $in: createSetDto.questions } }, { usedInSet: true })
@@ -60,5 +61,36 @@ export class SetsService {
 
     const sets = await this.SetRepository.find(queryObj, {}, { skip, limit: SETS_LIST_LIMIT })
     return sets
+  }
+
+  async addQuestion({ setId, questionId }: AddQuestionDto) {
+    const getSetPromise = this.SetRepository.findById(setId)
+    const getQuestionPromise = this.QuestionRepository.findById(questionId)
+
+    const [set, question] = await Promise.all([getSetPromise, getQuestionPromise])
+
+    if (!set) throw new BadRequestException('Set does not exist.')
+    if (!question) throw new BadRequestException('Question does not exist.')
+    if (set.status === 'completed') throw new BadRequestException('Set is already completed.')
+    if (question.usedInSet) throw new BadRequestException('Question is already used in a set.')
+    if (set.topic !== question.topic) throw new BadRequestException('Question does not match the topic of the set.')
+
+    const transaction = await this.SetRepository.startTransaction()
+
+    try {
+      const setUpdateQuery: UpdateQuery<SetDocument> = { $push: { questions: questionId } }
+      if (set.questions.length + 1 === QUESTIONS_LIMIT_IN_SET) setUpdateQuery.$set = { status: 'completed' }
+
+      const updateSetPromise = this.SetRepository.update(setId, setUpdateQuery)
+      const updateQuestionPromise = this.QuestionRepository.update(questionId, { usedInSet: true })
+
+      const [updatedSet] = await Promise.all([updateSetPromise, updateQuestionPromise])
+
+      await transaction.commitTransaction()
+      return updatedSet
+    } catch (error) {
+      await transaction.abortTransaction()
+      throw error
+    }
   }
 }
