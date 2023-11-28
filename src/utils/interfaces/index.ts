@@ -9,3 +9,8 @@ export interface AuthOptions {
 }
 
 export interface AuthUserDocument extends Omit<Omit<UserDocument, 'stats'>, 'sets'> {}
+
+export interface PracticeResultInfo {
+  resultId: string
+  options: number[]
+}

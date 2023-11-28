@@ -3,12 +3,14 @@ import { PracticeResultRepository, SetRepository, UserRepository } from 'src/dat
 import { PracticeDto } from './dtos/practice.dto'
 import { AuthUserDocument } from 'src/utils/interfaces'
 import { Types } from 'mongoose'
+import { PracticeResultManager } from './result-manager.service'
 
 @Injectable()
 export class PracticeService {
   constructor(
     private readonly SetRepository: SetRepository,
     private readonly UserRepository: UserRepository,
+    private readonly PracticeResultManager: PracticeResultManager,
     private readonly PracticeResultRepository: PracticeResultRepository,
   ) {}
 
@@ -26,6 +28,7 @@ export class PracticeService {
       const [result] = await Promise.all([createResultPromise, updateUserPromise])
       await transaction.commitTransaction()
 
+      this.PracticeResultManager.register(user.id, result.id)
       return result
     } catch (error) {
       await transaction.abortTransaction()

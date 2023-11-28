@@ -4,6 +4,7 @@ import { PracticeController } from './practice.controller'
 import { DatabaseModule } from 'src/database/database.module'
 import { PracticeResult, PracticeResultSchema, Set, SetSchema, User, UserSchema } from 'src/database/models'
 import { PracticeResultRepository, SetRepository, UserRepository } from 'src/database/repositories'
+import { PracticeResultManager } from './result-manager.service'
 
 @Module({
   imports: [
@@ -14,6 +15,6 @@ import { PracticeResultRepository, SetRepository, UserRepository } from 'src/dat
     ]),
   ],
   controllers: [PracticeController],
-  providers: [PracticeService, SetRepository, UserRepository, PracticeResultRepository],
+  providers: [PracticeService, SetRepository, UserRepository, PracticeResultRepository, PracticeResultManager],
 })
 export class PracticeModule {}
