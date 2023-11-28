@@ -14,6 +14,11 @@ export const ENTITIES = {
   REPORT: 'report',
 } as const
 
+export const QUIZ_TYPES = {
+  PRACTICE: 'practice',
+  PVP: 'pvp',
+} as const
+
 export const ACTIONS = {
   CREATE: 'create',
   READ: 'read',
@@ -33,6 +38,11 @@ export const SUBMISSION_ACTIONS = {
   REJECT: 'reject',
 } as const
 
+// practice/pvp result-specific actions
+export const GAME_ACTIONS = {
+  PLAY: 'play',
+} as const
+
 // Role-Based Access (RBA) configuration
 export const RBAs: Record<Role, Readonly<Permission[]>> = {
   admin: [
@@ -50,6 +60,8 @@ export const RBAs: Record<Role, Readonly<Permission[]>> = {
     'set:read',
     'set:update',
     'set:delete',
+    'practice:play',
+    'pvp:play',
     'submission:read',
   ],
   moderator: [
@@ -61,6 +73,8 @@ export const RBAs: Record<Role, Readonly<Permission[]>> = {
     'question:delete',
     'set:read',
     'set:update',
+    'practice:play',
+    'pvp:play',
     'submission:read',
     'submission:approve',
     'submission:reject',
@@ -71,6 +85,8 @@ export const RBAs: Record<Role, Readonly<Permission[]>> = {
     'user:read',
     'question:read',
     'set:read',
+    'practice:play',
+    'pvp:play',
     'submission:create',
     'submission:read',
     'submission:update',

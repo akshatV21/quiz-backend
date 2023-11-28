@@ -5,6 +5,7 @@ import { DatabaseModule } from './database/database.module'
 import { AuthModule } from './auth/auth.module';
 import { QuestionsModule } from './questions/questions.module';
 import { SetsModule } from './sets/sets.module';
+import { PracticeModule } from './practice/practice.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { SetsModule } from './sets/sets.module';
     AuthModule,
     QuestionsModule,
     SetsModule,
+    PracticeModule,
   ],
   controllers: [],
   providers: [],

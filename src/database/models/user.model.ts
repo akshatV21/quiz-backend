@@ -7,11 +7,11 @@ export type UserDocument = User & Document
 
 @Schema({ _id: false })
 export class UserSetsSchema {
-  @Prop({ default: [], ref: 'Set' })
+  @Prop({ default: [], ref: 'PracticeResult' })
   practice: Types.ObjectId[]
 
-  @Prop({ default: [], ref: 'Set' })
-  versus: Types.ObjectId[]
+  @Prop({ default: [], ref: 'PvpResult' })
+  pvp: Types.ObjectId[]
 }
 
 @Schema({ _id: false })
@@ -41,7 +41,7 @@ export class User {
   role: Role
 
   @Prop({ default: new UserSetsSchema() })
-  sets?: UserSetsSchema
+  results?: UserSetsSchema
 
   @Prop({ default: new UserStatsSchema() })
   stats?: UserStatsSchema

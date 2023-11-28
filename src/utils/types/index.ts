@@ -1,4 +1,4 @@
-import { ENTITIES, ROLES, USER_ACTIONS, SUBMISSION_ACTIONS, ACTIONS, TOPICS, SETS_STATUS } from '../constants'
+import { ENTITIES, ROLES, USER_ACTIONS, SUBMISSION_ACTIONS, ACTIONS, TOPICS, SETS_STATUS, GAME_ACTIONS, QUIZ_TYPES } from '../constants'
 
 export type Role = (typeof ROLES)[keyof typeof ROLES]
 
@@ -14,7 +14,9 @@ type UserPermission = `${typeof ENTITIES.USER}:${UserAction}`
 
 type SubmissionPermission = `${typeof ENTITIES.SUBMISSION}:${SubmissionAction}`
 
-export type Permission = `${Entity}:${Action}` | UserPermission | SubmissionPermission
+type GamePermission = `${(typeof QUIZ_TYPES)[keyof typeof QUIZ_TYPES]}:${(typeof GAME_ACTIONS)[keyof typeof GAME_ACTIONS]}`
+
+export type Permission = `${Entity}:${Action}` | UserPermission | SubmissionPermission | GamePermission
 
 export type HttpSuccessResponse = Promise<{
   success: true

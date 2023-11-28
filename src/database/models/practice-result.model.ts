@@ -15,6 +15,15 @@ class PracticeOptionsSchema {
   skipped: number
 }
 
+@Schema({ _id: false })
+export class TimeSchema {
+  @Prop({ default: null })
+  start: Date
+
+  @Prop({ default: null })
+  end: Date
+}
+
 @Schema({ timestamps: true })
 export class PracticeResult {
   @Prop({ required: true, ref: 'User' })
@@ -26,8 +35,8 @@ export class PracticeResult {
   @Prop({ default: new PracticeOptionsSchema() })
   options?: PracticeOptionsSchema
 
-  @Prop({ required: true })
-  time: number
+  @Prop({ default: new TimeSchema() })
+  time?: TimeSchema
 }
 
 export const PracticeResultSchema = SchemaFactory.createForClass(PracticeResult)
