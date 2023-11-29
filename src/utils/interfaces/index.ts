@@ -1,3 +1,4 @@
+import { Socket } from 'socket.io'
 import { UserDocument } from 'src/database/models'
 import { Permission, Role } from '../types'
 
@@ -13,4 +14,8 @@ export interface AuthUserDocument extends Omit<Omit<UserDocument, 'stats'>, 'set
 export interface PracticeResultInfo {
   resultId: string
   options: number[]
+}
+
+export interface AuthenticatedSocket extends Socket {
+  entityId?: string
 }
