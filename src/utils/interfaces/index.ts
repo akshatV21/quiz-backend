@@ -15,9 +15,20 @@ export interface PracticeResultInfo {
   resultId: string
   setId: string
   options: number[]
-  startTime?: Date
+  startTime?: number
 }
 
 export interface AuthenticatedSocket extends Socket {
   entityId?: string
 }
+
+export interface SetStartTimePayload {
+  userId: string
+}
+
+export interface SelectOptionPayload extends SetStartTimePayload {
+  questionIndex: number
+  optionIndex: number
+}
+
+export interface CancelPayload extends SetStartTimePayload {}

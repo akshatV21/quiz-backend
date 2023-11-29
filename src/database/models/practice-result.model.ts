@@ -18,10 +18,10 @@ class PracticeOptionsSchema {
 @Schema({ _id: false })
 export class TimeSchema {
   @Prop({ default: null })
-  start: Date
+  start: number
 
   @Prop({ default: null })
-  end: Date
+  end: number
 }
 
 @Schema({ timestamps: true })

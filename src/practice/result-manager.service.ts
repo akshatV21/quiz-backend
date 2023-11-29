@@ -28,6 +28,10 @@ export class PracticeResultManager {
     return this.results.has(userId)
   }
 
+  setStartTime(userId: string) {
+    this.results.get(userId).startTime = Date.now()
+  }
+
   async submit(userId: string) {
     try {
       const resultInfo = this.results.get(userId)

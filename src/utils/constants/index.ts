@@ -123,3 +123,9 @@ export const SETS_STATUS = {
   INCOMPLETE: 'incomplete',
   COMPLETED: 'completed',
 } as const
+
+export const EVENTS = {
+  SET_START_TIME: 'set-start-time',
+  SELECT_OPTION: 'select-option',
+  CANCEL: 'cancel',
+} as const
