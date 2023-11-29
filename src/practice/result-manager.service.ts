@@ -18,12 +18,10 @@ export class PracticeResultManager {
 
   register(userId: string, resultId: string, setId: string) {
     this.results.set(userId, { resultId, options: new Array(10).fill(-1), setId, startTime: null })
-    console.log(this.results.get(userId))
   }
 
   selectOption(userId: string, questionIndex: number, optionIndex: number) {
     this.results.get(userId).options[questionIndex] = optionIndex
-    console.log(this.results.get(userId))
   }
 
   isRegistered(userId: string) {
@@ -31,7 +29,6 @@ export class PracticeResultManager {
   }
 
   setStartTime(userId: string) {
-    console.log(this.results.get(userId))
     this.results.get(userId).startTime = Date.now()
   }
 
@@ -48,12 +45,12 @@ export class PracticeResultManager {
       const { correct, skipped } = this.getCorrectAndSkippedCount(set.questions as Question[], resultInfo.options)
 
       const updateQuery: UpdateQuery<PracticeResultDocument> = {
-        $push: { 'options.selected': resultInfo.options },
+        $push: { 'options.selected': { $each: resultInfo.options } },
         $inc: { 'options.correct': correct, 'options.skipped': skipped },
         $set: { 'time.start': resultInfo.startTime, 'time.end': Date.now() },
       }
 
-      const result = await this.PracticeResultRepository.updateByQuery({ id: resultInfo.resultId }, updateQuery)
+      const result = await this.PracticeResultRepository.update(resultInfo.resultId, updateQuery)
       this.results.delete(userId)
 
       return result
@@ -65,7 +62,6 @@ export class PracticeResultManager {
   async cancel(userId: string) {
     try {
       const resultInfo = this.results.get(userId)
-      console.log(this.results.get(userId))
 
       this.results.delete(userId)
       await this.PracticeResultRepository.delete({ id: resultInfo.resultId })

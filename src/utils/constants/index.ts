@@ -127,5 +127,6 @@ export const SETS_STATUS = {
 export const EVENTS = {
   SET_START_TIME: 'set-start-time',
   SELECT_OPTION: 'select-option',
+  SUBMIT: 'submit',
   CANCEL: 'cancel',
 } as const

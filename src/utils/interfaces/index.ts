@@ -31,4 +31,6 @@ export interface SelectOptionPayload extends SetStartTimePayload {
   optionIndex: number
 }
 
+export interface SubmitPayload extends SetStartTimePayload {}
+
 export interface CancelPayload extends SetStartTimePayload {}

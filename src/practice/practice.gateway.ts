@@ -5,7 +5,7 @@ import { Authorize } from 'src/auth/guards/authorize.guard'
 import { SocketSessions } from 'src/utils/providers/socket-session-manager.service'
 import { PracticeResultManager } from './result-manager.service'
 import { EVENTS } from 'src/utils/constants'
-import { CancelPayload, SelectOptionPayload, SetStartTimePayload } from 'src/utils/interfaces'
+import { CancelPayload, SelectOptionPayload, SetStartTimePayload, SubmitPayload } from 'src/utils/interfaces'
 
 @WebSocketGateway({ namespace: 'practice', cors: { origin: '*' } })
 export class PracticeGateway {
@@ -40,6 +40,11 @@ export class PracticeGateway {
   @SubscribeMessage(EVENTS.SELECT_OPTION)
   handleSelectOption(@MessageBody() payload: SelectOptionPayload) {
     this.practiceResultManager.selectOption(payload.userId, payload.questionIndex, payload.optionIndex)
+  }
+
+  @SubscribeMessage(EVENTS.SUBMIT)
+  handleSubmit(@MessageBody() payload: SubmitPayload) {
+    return this.practiceResultManager.submit(payload.userId)
   }
 
   @SubscribeMessage(EVENTS.CANCEL)
