@@ -13,7 +13,9 @@ export interface AuthUserDocument extends Omit<Omit<UserDocument, 'stats'>, 'set
 
 export interface PracticeResultInfo {
   resultId: string
+  setId: string
   options: number[]
+  startTime?: Date
 }
 
 export interface AuthenticatedSocket extends Socket {

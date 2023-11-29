@@ -1,6 +1,7 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import { Document, Types } from 'mongoose'
 import { Serial, SetStatus, Topic } from 'src/utils/types'
+import { Question } from './question.model'
 
 export type SetDocument = Set & Document
 
@@ -13,7 +14,7 @@ export class Set {
   topic: Topic
 
   @Prop({ required: true, ref: 'Question' })
-  questions: Types.ObjectId[]
+  questions: Types.ObjectId[] | Question[]
 
   @Prop({ required: true })
   status: SetStatus

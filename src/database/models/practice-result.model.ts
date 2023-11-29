@@ -5,7 +5,7 @@ export type PracticeResultDocument = PracticeResult & Document
 
 @Schema({ _id: false })
 class PracticeOptionsSchema {
-  @Prop({ default: new Array(10).fill(-1) })
+  @Prop({ default: [] })
   selected: number[]
 
   @Prop({ default: 0 })

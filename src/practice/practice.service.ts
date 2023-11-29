@@ -28,7 +28,7 @@ export class PracticeService {
       const [result] = await Promise.all([createResultPromise, updateUserPromise])
       await transaction.commitTransaction()
 
-      this.PracticeResultManager.register(user.id, result.id)
+      this.PracticeResultManager.register(user.id, result.id, setId.toString())
       return result
     } catch (error) {
       await transaction.abortTransaction()
