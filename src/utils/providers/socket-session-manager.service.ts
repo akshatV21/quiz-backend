@@ -4,21 +4,25 @@ import { Types } from 'mongoose'
 
 @Injectable()
 export class SocketSessions {
-  private sessions: Map<string | Types.ObjectId, AuthenticatedSocket> = new Map()
+  private sessions: Map<string, AuthenticatedSocket> = new Map()
 
-  getSocket(id: string | Types.ObjectId) {
+  getSocket(id: string) {
     return this.sessions.get(id)
   }
 
-  setSocket(userId: string | Types.ObjectId, socket: AuthenticatedSocket) {
+  setSocket(userId: string, socket: AuthenticatedSocket) {
     this.sessions.set(userId, socket)
   }
 
-  removeSocket(userId: string | Types.ObjectId) {
+  removeSocket(userId: string) {
     this.sessions.delete(userId)
   }
 
-  getSockets(): Map<string | Types.ObjectId, AuthenticatedSocket> {
+  getSockets(): Map<string, AuthenticatedSocket> {
     return this.sessions
+  }
+
+  getUserId(socketId: string): string {
+    return [...this.sessions.entries()].find(([_, s]) => s.id === socketId)[0]
   }
 }

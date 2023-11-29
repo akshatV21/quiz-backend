@@ -45,6 +45,11 @@ export class Authorize implements CanActivate {
     return true
   }
 
+  static authorizeWsRequest(token: string, secret: string): any {
+    const { id } = Authorize.validateToken(token, secret)
+    return id
+  }
+
   static validateToken(token: string, secret: string): any {
     return verify(token, secret, (err, payload) => {
       // when jwt is valid
