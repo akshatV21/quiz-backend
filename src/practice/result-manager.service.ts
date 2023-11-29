@@ -17,11 +17,13 @@ export class PracticeResultManager {
   }
 
   register(userId: string, resultId: string, setId: string) {
-    this.results.set(userId, { resultId, options: new Array(10).fill(-1), setId })
+    this.results.set(userId, { resultId, options: new Array(10).fill(-1), setId, startTime: null })
+    console.log(this.results.get(userId))
   }
 
   selectOption(userId: string, questionIndex: number, optionIndex: number) {
     this.results.get(userId).options[questionIndex] = optionIndex
+    console.log(this.results.get(userId))
   }
 
   isRegistered(userId: string) {
@@ -29,6 +31,7 @@ export class PracticeResultManager {
   }
 
   setStartTime(userId: string) {
+    console.log(this.results.get(userId))
     this.results.get(userId).startTime = Date.now()
   }
 
@@ -62,6 +65,7 @@ export class PracticeResultManager {
   async cancel(userId: string) {
     try {
       const resultInfo = this.results.get(userId)
+      console.log(this.results.get(userId))
 
       this.results.delete(userId)
       await this.PracticeResultRepository.delete({ id: resultInfo.resultId })

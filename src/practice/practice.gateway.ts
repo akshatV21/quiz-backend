@@ -1,5 +1,5 @@
 import { ConfigService } from '@nestjs/config'
-import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets'
+import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
 import { Authorize } from 'src/auth/guards/authorize.guard'
 import { SocketSessions } from 'src/utils/providers/socket-session-manager.service'
@@ -33,17 +33,17 @@ export class PracticeGateway {
   }
 
   @SubscribeMessage(EVENTS.SET_START_TIME)
-  handleSetStartTime(payload: SetStartTimePayload) {
+  handleSetStartTime(@MessageBody() payload: SetStartTimePayload) {
     this.practiceResultManager.setStartTime(payload.userId)
   }
 
   @SubscribeMessage(EVENTS.SELECT_OPTION)
-  handleSelectOption(payload: SelectOptionPayload) {
+  handleSelectOption(@MessageBody() payload: SelectOptionPayload) {
     this.practiceResultManager.selectOption(payload.userId, payload.questionIndex, payload.optionIndex)
   }
 
   @SubscribeMessage(EVENTS.CANCEL)
-  handleCancel(payload: CancelPayload) {
+  handleCancel(@MessageBody() payload: CancelPayload) {
     this.practiceResultManager.cancel(payload.userId)
   }
 }

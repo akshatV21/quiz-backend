@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Reflector } from '@nestjs/core'
+import { WsException } from '@nestjs/websockets'
 import { verify } from 'jsonwebtoken'
 import { UserRepository } from 'src/database/repositories'
 import { RBAs } from 'src/utils/constants'
@@ -42,12 +43,17 @@ export class Authorize implements CanActivate {
     if (!RBAs[user.role].includes(permission) || user.blocked.includes(permission))
       throw new ForbiddenException('You are not allowed to perform this action.')
 
+    request.user = user
     return true
   }
 
   static authorizeWsRequest(token: string, secret: string): any {
-    const { id } = Authorize.validateToken(token, secret)
-    return id
+    try {
+      const { id } = Authorize.validateToken(token, secret)
+      return id
+    } catch (error) {
+      throw new WsException(error.message)
+    }
   }
 
   static validateToken(token: string, secret: string): any {
