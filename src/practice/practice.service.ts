@@ -15,15 +15,15 @@ export class PracticeService {
   ) {}
 
   async create({ setId }: PracticeDto, user: AuthUserDocument) {
-    const setExists = await this.SetRepository.exists({ _id: setId })
-    if (!setExists) throw new BadRequestException('Set does not exist.')
+    const set = await this.SetRepository.findById(setId, { serial: 1 })
+    if (!set) throw new BadRequestException('Set does not exist.')
 
     const resultObjectId = new Types.ObjectId()
     const transaction = await this.PracticeResultRepository.startTransaction()
 
     try {
       const updateUserPromise = this.UserRepository.update(user._id, { $push: { 'results.practice': resultObjectId } })
-      const createResultPromise = this.PracticeResultRepository.create({ user: user._id, set: setId }, resultObjectId)
+      const createResultPromise = this.PracticeResultRepository.create({ user: user._id, set: setId, serial: set.serial }, resultObjectId)
 
       const [result] = await Promise.all([createResultPromise, updateUserPromise])
       await transaction.commitTransaction()

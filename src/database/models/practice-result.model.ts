@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document, Types } from 'mongoose'
+import { Serial } from 'src/utils/types'
 
 export type PracticeResultDocument = PracticeResult & Document
 
@@ -31,6 +32,9 @@ export class PracticeResult {
 
   @Prop({ required: true, ref: 'Set' })
   set: Types.ObjectId
+
+  @Prop({ required: true })
+  serial: Serial
 
   @Prop({ default: new PracticeOptionsSchema() })
   options?: PracticeOptionsSchema
