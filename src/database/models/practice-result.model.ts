@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document, Types } from 'mongoose'
-import { Serial } from 'src/utils/types'
+import { Serial, Topic } from 'src/utils/types'
 
 export type PracticeResultDocument = PracticeResult & Document
 
@@ -35,6 +35,9 @@ export class PracticeResult {
 
   @Prop({ required: true })
   serial: Serial
+
+  @Prop({ required: true })
+  topic: Topic
 
   @Prop({ default: new PracticeOptionsSchema() })
   options?: PracticeOptionsSchema

@@ -118,6 +118,7 @@ export const TOPICS = {
 export const SETS_LIST_LIMIT = 10
 export const QUESTIONS_LIST_LIMIT = 20
 export const QUESTIONS_LIMIT_IN_SET = 10
+export const RESULTS_LIST_LIMIT = 10
 
 export const SETS_STATUS = {
   INCOMPLETE: 'incomplete',
