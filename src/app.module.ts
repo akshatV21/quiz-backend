@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { QuestionsModule } from './questions/questions.module';
 import { SetsModule } from './sets/sets.module';
 import { PracticeModule } from './practice/practice.module';
+import { PvpModule } from './pvp/pvp.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { PracticeModule } from './practice/practice.module';
     QuestionsModule,
     SetsModule,
     PracticeModule,
+    PvpModule,
   ],
   controllers: [],
   providers: [],

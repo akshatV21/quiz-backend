@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io'
 import { UserDocument } from 'src/database/models'
-import { Permission, Role } from '../types'
+import { Permission, Role, Topic } from '../types'
 
 export interface AuthOptions {
   isLive?: boolean // is the endpoint currently accessible or not
@@ -34,3 +34,24 @@ export interface SelectOptionPayload extends SetStartTimePayload {
 export interface SubmitPayload extends SetStartTimePayload {}
 
 export interface CancelPayload extends SetStartTimePayload {}
+
+export interface UserPvpResultInfo {
+  id: string
+  options: number[]
+  time: number
+}
+
+export interface PvpResultInfo {
+  setId: string
+  topic: Topic
+  userIds: string[]
+  users: Record<string, UserPvpResultInfo>
+  winner: string
+}
+
+export interface PvpResultRegisterInfo {
+  userId: string
+  resultId: string
+  setId: string
+  topic: Topic
+}
