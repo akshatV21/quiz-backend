@@ -1,73 +1,95 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Quiz Application
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<!-- Welcome message and project introduction -->
+Welcome to the Quiz Application! This web-based application is designed to facilitate quizzes, practice sessions, and PvP (Player versus Player) quizzes, providing an engaging learning experience.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Overview](#overview)
+- [Features](#features)
+- [Roles](#roles)
+  - [Admin](#admin)
+  - [User](#user)
+- [RBAC Implementation](#rbac-implementation)
+- [Getting Started](#getting-started)
+- [Contributing](#contributing)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Overview
 
-## Installation
+<!-- Description of the main features of the application -->
+The Quiz Application is a comprehensive platform that allows users to create, manage, and participate in quizzes. It encompasses a variety of features, including RBAC, practice sessions, and PvP quizzes. The main focus of this application is to provide a secure and user-friendly environment for both administrators and regular users.
 
-```bash
-$ npm install
-```
+## Features
 
-## Running the app
+<!-- List of key features with a brief description -->
+- **RBAC (Role-Based Access Control):** The application implements RBAC to ensure proper access control based on user roles.
+- **Practice Module:** Users can engage in practice sessions to improve their knowledge in a particular topic.
+- **PvP Quizzes:** Users can challenge each other in Player versus Player quizzes, enhancing the competitive aspect of learning.
+- **Admin Dashboard:** Administrators have access to a dedicated dashboard for managing questions, sets, and user roles.
 
-```bash
-# development
-$ npm run start
+**Note: This project is currently in development, and some features may be missing or subject to change.**
 
-# watch mode
-$ npm run start:dev
+## Roles
 
-# production mode
-$ npm run start:prod
-```
+### Admin
 
-## Test
+<!-- Detailed responsibilities of the Admin role -->
+As an Admin, you have elevated privileges to manage the entire application. Your responsibilities include:
 
-```bash
-# unit tests
-$ npm run test
+- **Question Management:**
+  - Create, update, and delete quiz questions.
+  - View a list of all questions.
 
-# e2e tests
-$ npm run test:e2e
+- **Set Management:**
+  - Create and manage sets of questions for quizzes.
+  - Monitor the usage of questions in sets.
 
-# test coverage
-$ npm run test:cov
-```
+- **User Management:**
+  - Assign roles to users.
+  - View and manage user profiles.
+ 
+### Moderator
 
-## Support
+<!-- Responsibilities of the Moderator role -->
+Moderators play a crucial role in maintaining a positive and fair environment within the application. Their responsibilities include:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Content Moderation:**
+  - Review user-generated content for adherence to community guidelines.
+  - Take appropriate actions such as warning or removing content that violates guidelines.
 
-## Stay in touch
+- **User Interaction:**
+  - Monitor user interactions, ensuring respectful and constructive communication.
+  - Address conflicts or inappropriate behavior within the community.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### User
 
-## License
+<!-- Description of the capabilities of a regular User -->
+As a regular User, you have the following capabilities:
 
-Nest is [MIT licensed](LICENSE).
+- **Quiz Participation:**
+  - Engage in quizzes created by Admins.
+  - View and attempt practice quizzes.
+
+- **Profile Management:**
+  - View your quiz history and performance.
+  - Update your profile information.
+
+## RBAC Implementation
+
+<!-- Explanation of how the RBAC system works in the application -->
+The RBAC system ensures that each user has the appropriate permissions based on their role. This enhances security and restricts unauthorized access to sensitive functionalities.
+
+## Getting Started
+
+<!-- Instructions for setting up and running the application -->
+To get started with the Quiz Application, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/your-username/quiz-application.git`
+2. Install dependencies: `npm install`
+3. Set up the database and environment variables.
+4. Run the application: `npm start`
+
+## Contributing
+
+<!-- Guidelines for contributing to the project -->
+We welcome contributions from the community, If you would like to contribute to the development of the Quiz Application.
